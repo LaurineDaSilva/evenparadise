@@ -11,9 +11,11 @@ form {
     padding-top: 20px;
 }
 
-
-
 .form-label {
     font-weight:600;
+}
+
+.input-group-text {
+    margin: 0px;
 }
 
