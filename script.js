@@ -20,6 +20,9 @@ date.setAttribute("min", today);
 const form = document.querySelector("form");
 const elements = form.elements;
 
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
 for (const element of elements) {
     element.addEventListener('blur', (event) => {
         if (((element.type == "date") && (element.value < today)) || ((element.id == "theme" || element.id == "place") && (element.value == "0")) || (element.value == "")) {
@@ -32,6 +35,8 @@ for (const element of elements) {
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
-    console.log("implement form reset");
+    form.reset();
     console.log("implement toaster");
+    
+
 });
