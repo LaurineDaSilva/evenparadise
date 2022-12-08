@@ -24,19 +24,20 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="name" class="form-label">Nom</label>
-                        <input type="text" class="form-control user-input" id="name" required minlength="1" maxlength="255" oninvalid="this.setCustomValidity('')" oninput="this.setCustomValidity('')" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire"/>
+                        <input type="text" class="form-control user-input" id="name" required minlength="1" maxlength="255" oninvalid="this.setCustomValidity('')" oninput="this.setCustomValidity('')" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip"
+                        />
                         <p class="form-text">Nom de l'événement.</p>
                     </div>
 
                     <div class="col-md-4">
                         <label for="date" class="form-label">Date</label>
-                        <input type="date" class="form-control user-input" id="date" required oninput="this.setCustomValidity('')" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire"/>
+                        <input type="date" class="form-control user-input" id="date" required oninput="this.setCustomValidity('')" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip"/>
                         <p class="form-text">Date de l'événement.</p>
                     </div>
 
                     <div class="col-md-4">
                         <label for="place" class="form-label">Lieu</label>
-                        <select class="form-select user-input" id="place" required oninvalid="this.setCustomValidity('Ce champ est obligatoire')" oninput="this.setCustomValidity('')" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire">
+                        <select class="form-select user-input" id="place" required oninvalid="this.setCustomValidity('Ce champ est obligatoire')" oninput="this.setCustomValidity('')" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip">
                             <option value="0" selected>Choisir un lieu dans la liste</option>
                             <option value="1">Paris</option>
                             <option value="2">Rennes</option>
@@ -49,7 +50,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <label for="theme" class="form-label">Thème</label>
-                        <select class="form-select user-input" id="theme" required oninvalid="this.setCustomValidity('Ce champ est obligatoire')" oninput="this.setCustomValidity('')" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire">
+                        <select class="form-select user-input" id="theme" required oninvalid="this.setCustomValidity('Ce champ est obligatoire')" oninput="this.setCustomValidity('')" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip">
                             <option value="0" selected>Choisir un thème dans la liste</option>
                             <option value="1">Écologie</option>
                             <option value="2">Ressources Humaines</option>
@@ -62,7 +63,7 @@
                         <label for="rate" class="form-label">Tarif</label>
                         <div class="input-group">
                             <span class="input-group-text">€</span>
-                            <input type="number" class="form-control user-input" id="rate" required step="0.01" min="1" oninvalid="this.setCustomValidity('Ce champ est obligatoire')" oninput="this.setCustomValidity('')" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire"/>
+                            <input type="number" class="form-control user-input" id="rate" required step="0.01" min="1" oninvalid="this.setCustomValidity('Ce champ est obligatoire')" oninput="this.setCustomValidity('')" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip"/>
                         </div>
                         <p class="form-text">Tarif journalier de l'événement.</p>
                     </div>
@@ -71,7 +72,7 @@
 
             <div class="row">
                 <label for="description" class="form-label">Description</label>
-                <textarea class="form-control user-input" id="description" rows="4" required minlength="1" maxlength="1000" oninvalid="this.setCustomValidity('Ce champ est obligatoire')" oninput="this.setCustomValidity('')" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire"></textarea>
+                <textarea class="form-control user-input" id="description" rows="4" required minlength="1" maxlength="1000" oninvalid="this.setCustomValidity('Ce champ est obligatoire')" oninput="this.setCustomValidity('')" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip"></textarea>
             </div>
 
             <div class="d-grid gap-2 d-md-flex justify-content-md-end margin">
