@@ -17,32 +17,19 @@ const date = document.getElementById("date");
 
 date.setAttribute("min", today);
 
-date.addEventListener('blur', (event) => {
-    if (date.value < today) {
-        date.classList.add("is-invalid");
-    } else if (date.value >= today) {
-        date.classList.add("is-valid");
-    }
-    console.log(date.value);
-});
 
-const name = document.getElementById("name");
+const elements = document.getElementsByClassName("user-input");
+console.log(elements);
+for (const element of elements) {
+    element.addEventListener('blur', (event) => {
+        console.log(element.value);
+        if ((element.type == "date") && (element.value < today)) {
+            date.classList.add("is-invalid");
+        } else if (element.value == "") {
+            element.classList.add("is-invalid");
+        } else {
+            element.classList.add("is-valid");
+        }
+    })
+}
 
-name.addEventListener('blur', (event) => {
-    if (name.value == "") {
-        name.classList.add("is-invalid");
-    } else {
-        name.classList.add("is-valid");
-    }
-});
-
-const place = document.getElementById("name");
-
-place.addEventListener('blur', (event) => {
-    console.log(place.value);
-    if (place.value == "") {
-        place.classList.add("is-invalid");
-    } else {
-        place.classList.add("is-valid");
-    }
-})
