@@ -17,15 +17,12 @@ const date = document.getElementById("date");
 
 date.setAttribute("min", today);
 
+const form = document.querySelector("form");
+const elements = form.elements;
 
-const elements = document.getElementsByClassName("user-input");
-console.log(elements);
 for (const element of elements) {
     element.addEventListener('blur', (event) => {
-        console.log(element.value);
-        if ((element.type == "date") && (element.value < today)) {
-            date.classList.add("is-invalid");
-        } else if (element.value == "") {
+        if (((element.type == "date") && (element.value < today)) || ((element.id == "theme" || element.id == "place") && (element.value == "0")) || (element.value == "")) {
             element.classList.add("is-invalid");
         } else {
             element.classList.add("is-valid");
@@ -33,3 +30,8 @@ for (const element of elements) {
     })
 }
 
+form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    console.log("implement form reset");
+    console.log("implement toaster");
+});
