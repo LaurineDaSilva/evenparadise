@@ -20,14 +20,25 @@ date.setAttribute("min", today);
 const form = document.querySelector("form");
 const elements = form.elements;
 
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-
 for (const element of elements) {
-    element.addEventListener('blur', (event) => {
-        if (((element.type == "date") && (element.value < today)) || ((element.id == "theme" || element.id == "place") && (element.value == "0")) || (element.value == "")) {
+    element.addEventListener('change', (event) => {
+        event.preventDefault();
+        if (((element.type == "date") && (element.value < today)) || (element.value == "")) {
             element.classList.add("is-invalid");
         } else {
+            element.classList.remove("is-invalid");
+            element.classList.add("is-valid");
+        }
+    })
+}
+
+for (const element of elements) {
+    element.addEventListener('invalid', (event) => {
+        event.preventDefault();
+        if (((element.type == "date") && (element.value < today)) || (element.value == "")) {
+            element.classList.add("is-invalid");
+        } else {
+            element.classList.remove("is-invalid");
             element.classList.add("is-valid");
         }
     })
@@ -37,6 +48,4 @@ form.addEventListener("submit", (event) => {
     event.preventDefault();
     form.reset();
     console.log("implement toaster");
-    
-
 });
