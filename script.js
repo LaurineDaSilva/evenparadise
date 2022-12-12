@@ -30,7 +30,10 @@ for (const element of elements) {
     element.addEventListener('invalid', (event) => {
         event.preventDefault();
         element.classList.add("is-invalid");
-        new bootstrap.Tooltip(element);
+        const invalidElements = document.getElementsByClassName("is-invalid");
+        const firstInvalidElement = invalidElements[0];
+        new bootstrap.Tooltip(firstInvalidElement);
+        firstInvalidElement.focus();
      });
     element.addEventListener('change', (event) => {
         event.preventDefault();
