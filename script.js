@@ -32,14 +32,24 @@ for (const element of elements) {
         element.classList.add("is-invalid");
         const invalidElements = document.getElementsByClassName("is-invalid");
         const firstInvalidElement = invalidElements[0];
-        new bootstrap.Tooltip(firstInvalidElement);
+        const tooltip = new bootstrap.Tooltip(firstInvalidElement);
+        if ((element.type == "date"))  {
+            tooltip.setContent({ '.tooltip-inner': 'DATE' });
+        } else if ((element.type == "number"))  {
+            tooltip.setContent({ '.tooltip-inner': 'MONTANT' });
+        };
         firstInvalidElement.focus();
      });
     element.addEventListener('change', (event) => {
         event.preventDefault();
         if (((element.type == "date") && (element.value < today)) || (element.value == "") || ((element.type == "number") && (element.value <= 0))) {
             element.classList.add("is-invalid");
-            new bootstrap.Tooltip(element);
+            const tooltip = new bootstrap.Tooltip(element);
+            if ((element.type == "date")) {
+                tooltip.setContent({ '.tooltip-inner': 'DATE' });
+            } else if ((element.type == "number")) {
+                tooltip.setContent({ '.tooltip-inner': 'MONTANT' });
+            };
         } else {
             element.classList.remove("is-invalid");
             element.classList.add("is-valid");
