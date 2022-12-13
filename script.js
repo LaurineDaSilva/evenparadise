@@ -87,5 +87,9 @@ form.addEventListener("submit", (event) => {
     for (const element of elements) {
         element.classList.remove("is-valid");
     };
-    console.log("implement toaster");
+
+    const toastLiveExample = document.getElementById('liveToast')
+    const toast = new bootstrap.Toast(toastLiveExample)
+
+    toast.show()
 });
