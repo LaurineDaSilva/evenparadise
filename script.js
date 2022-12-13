@@ -27,6 +27,10 @@ const elements = form.elements;
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
+for (const tooltip of tooltipList) {
+    tooltip.disable();
+}
+
 for (const element of elements) {
 
     element.addEventListener('invalid', (event) => {
@@ -53,21 +57,21 @@ for (const element of elements) {
         event.preventDefault();
 
         const tooltip = bootstrap.Tooltip.getInstance(`#${element.id}`);
-        tooltip.enable();
 
-        if (((element.type == "date") && (element.value < today)) || (element.value == "") || ((element.type == "number") && (element.value <= 0))) {
+        if ((element.value == "") || (element.value == null)) {
             element.classList.add("is-invalid");
             tooltip.enable();
-            if ((element.type == "date" && (element.value < today))) {
-                tooltip.setContent({ '.tooltip-inner': "Doit être égale ou supérieure à aujourd'hui" });
-            } else if ((element.type == "number") && (element.value <= 0)) {
-                tooltip.setContent({ '.tooltip-inner': 'Doit être positif' });
-            };
+        } else if ((element.value < today)) {
+            tooltip.enable();
+            tooltip.setContent({ '.tooltip-inner': "Doit être égale ou supérieure à aujourd'hui" });
+        } else if ((element.type == "number") && (element.value <= 0)) {
+            tooltip.enable();
+            tooltip.setContent({ '.tooltip-inner': 'Doit être positif' });
         } else {
             tooltip.disable();
             element.classList.remove("is-invalid");
             element.classList.add("is-valid");
-        }
+        };
     });
 }
 
