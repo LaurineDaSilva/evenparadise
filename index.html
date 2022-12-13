@@ -71,13 +71,18 @@
 
 
             <div class="row">
-                <label for="description" class="form-label">Description</label>
-                <textarea class="form-control user-input" id="description" rows="4" required minlength="1" maxlength="1000" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip"></textarea>
+                <div class="col-md-12">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control user-input" id="description" rows="4" required minlength="1" maxlength="1000" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip"></textarea>
+                    <p class="form-text">Description de l'événement.</p>
+                </div>
             </div>
 
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end margin">
-                <button type="submit" class="btn btn-primary" id="submit-button">Sauvegarder</button>
-              </div>
+            <div class="row">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end margin">
+                    <button type="submit" class="btn btn-primary" id="submit-button">Sauvegarder</button>
+                </div>
+            </div>
 
             <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">

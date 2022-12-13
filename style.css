@@ -22,4 +22,7 @@ form {
 .custom-tooltip {
     --bs-tooltip-bg: var(--bs-danger);
   }
-  
+ 
+  .row {
+    margin: 0px 0.5px;
+  }
