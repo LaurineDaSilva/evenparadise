@@ -1,3 +1,5 @@
+// Setting up date
+
 let today = new Date();
 let day = today.getDate();
 let month = today.getMonth()+1;
@@ -19,7 +21,11 @@ date.setAttribute("min", today);
 
 const form = document.querySelector("form");
 const elements = form.elements;
-let tooltip;
+
+// Setting up validation style
+
+const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
 
 for (const element of elements) {
 
@@ -30,7 +36,9 @@ for (const element of elements) {
         
         const invalidElements = document.getElementsByClassName("is-invalid");
         const firstInvalidElement = invalidElements[0];
-        tooltip = new bootstrap.Tooltip(element);
+
+        const tooltip = bootstrap.Tooltip.getInstance(`#${element.id}`);
+        tooltip.enable();
 
         if ((element.type == "date") && (element.value < today))  {
             tooltip.setContent({ '.tooltip-inner': "Doit être égale ou supérieure à aujourd'hui" });
@@ -43,15 +51,20 @@ for (const element of elements) {
 
     element.addEventListener('change', (event) => {
         event.preventDefault();
+
+        const tooltip = bootstrap.Tooltip.getInstance(`#${element.id}`);
+        tooltip.enable();
+
         if (((element.type == "date") && (element.value < today)) || (element.value == "") || ((element.type == "number") && (element.value <= 0))) {
             element.classList.add("is-invalid");
-            tooltip = new bootstrap.Tooltip(element);
+            tooltip.enable();
             if ((element.type == "date" && (element.value < today))) {
                 tooltip.setContent({ '.tooltip-inner': "Doit être égale ou supérieure à aujourd'hui" });
             } else if ((element.type == "number") && (element.value <= 0)) {
                 tooltip.setContent({ '.tooltip-inner': 'Doit être positif' });
             };
         } else {
+            tooltip.disable();
             element.classList.remove("is-invalid");
             element.classList.add("is-valid");
         }
