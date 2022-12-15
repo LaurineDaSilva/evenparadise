@@ -32,6 +32,7 @@ for (const tooltip of tooltipList) {
 }
 
 for (const element of elements) {
+    const elementHelpText = document.getElementById(`${element.id}-helptext`);
 
     element.addEventListener('invalid', (event) => {
         event.preventDefault();
@@ -43,6 +44,7 @@ for (const element of elements) {
 
         const tooltip = bootstrap.Tooltip.getInstance(`#${element.id}`);
         tooltip.enable();
+        elementHelpText.classList.add("text-danger");
 
         if ((element.value == "") 
             || (element.value == null)) {
@@ -68,6 +70,7 @@ for (const element of elements) {
             || (element.type == "number") && (element.value < 1)) {
                 element.classList.add("is-invalid");
                 tooltip.enable();
+                elementHelpText.classList.add("text-danger");
             if ((element.type == "date") && (element.value < today)) {
             tooltip.setContent({ '.tooltip-inner': "Doit être égale ou supérieure à aujourd'hui" });
             } else if ((element.type == "number") && (element.value < 1)) {
@@ -77,6 +80,8 @@ for (const element of elements) {
             tooltip.disable();
             element.classList.remove("is-invalid");
             element.classList.add("is-valid");
+            elementHelpText.classList.remove("text-danger");
+            elementHelpText.classList.add("text-success");
         };
     });
 }

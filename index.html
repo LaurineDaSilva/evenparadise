@@ -26,13 +26,13 @@
                         <label for="name" class="form-label">Nom</label>
                         <input type="text" class="form-control user-input" id="name" required minlength="1" maxlength="255" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip"
                         />
-                        <p class="form-text">Nom de l'événement.</p>
+                        <p class="form-text" id="name-helptext">Nom de l'événement.</p>
                     </div>
 
                     <div class="col-md-4">
                         <label for="date" class="form-label">Date</label>
                         <input type="date" class="form-control user-input" id="date" required data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip"/>
-                        <p class="form-text">Date de l'événement.</p>
+                        <p class="form-text" id="date-helptext">Date de l'événement.</p>
                     </div>
 
                     <div class="col-md-4">
@@ -43,7 +43,7 @@
                             <option value="2">Rennes</option>
                             <option value="3">Marseille</option>
                         </select>
-                        <p class="form-text">Lieu de l'événement.</p>
+                        <p class="form-text" id="place-helptext">Lieu de l'événement.</p>
                     </div>
                 </div>
                 
@@ -56,7 +56,7 @@
                             <option value="2">Ressources Humaines</option>
                             <option value="3">Tech</option>
                         </select>
-                        <p class="form-text">Thème de l'événement.</p>
+                        <p class="form-text" id="theme-helptext">Thème de l'événement.</p>
                     </div>
 
                     <div class="col-md-4">
@@ -65,7 +65,7 @@
                             <span class="input-group-text">€</span>
                             <input type="number" class="form-control user-input" id="rate" required step="0.01" min="1" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip"/>
                         </div>
-                        <p class="form-text">Tarif journalier de l'événement.</p>
+                        <p class="form-text" id="rate-helptext">Tarif journalier de l'événement.</p>
                     </div>
                  </div>
 
@@ -74,7 +74,7 @@
                 <div class="col-md-12">
                     <label for="description" class="form-label">Description</label>
                     <textarea class="form-control user-input" id="description" rows="4" required minlength="1" maxlength="1000" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip"></textarea>
-                    <p class="form-text">Description de l'événement.</p>
+                    <p class="form-text" id="description-helptext">Description de l'événement.</p>
                 </div>
             </div>
 
