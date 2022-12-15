@@ -33,6 +33,7 @@ const options = {
 for (const element of elements) {
     const elementHelpText = document.getElementById(`${element.id}-helptext`);
     const validity = element.validity;
+    
     let message = null;
 
     element.addEventListener('invalid', (event) => {
@@ -43,6 +44,7 @@ for (const element of elements) {
         elementHelpText.classList.add("text-danger");
 
         const tooltip = bootstrap.Tooltip.getOrCreateInstance(element, options);
+        tooltip.enable();
 
         if (validity.valueMissing) {
             message = "Ce champ est obligatoire";
@@ -63,8 +65,6 @@ for (const element of elements) {
 
         event.preventDefault();
         const valid = element.checkValidity();
-        console.log(valid);
-        console.log(element.value);
 
         const tooltip = bootstrap.Tooltip.getOrCreateInstance(element, options);
         
@@ -75,16 +75,16 @@ for (const element of elements) {
             elementHelpText.classList.remove("text-danger");
             elementHelpText.classList.add("text-success");
         } else {
-            tooltip.enable();
+            console.log(valid + " " + element.value);
             if (validity.valueMissing) {
                 message = "Ce champ est obligatoire";
-            } else if ((element.type == "date") && (validity.rangeUnderflow)) {
-                message = "Doit être égale ou supérieure à aujourd'hui";
             } else if ((element.type == "number") && (validity.rangeUnderflow)) {
                 message = "Doit être positif";
-            } 
+            } else if ((element.type == "date") && (validity.rangeUnderflow))  {
+                message = "Doit être égale ou supérieure à aujourd'hui";
+            }
         
-            
+            tooltip.enable();
             tooltip.setContent({ '.tooltip-inner': message });
             element.classList.add("is-invalid"); 
             elementHelpText.classList.add("text-danger");
