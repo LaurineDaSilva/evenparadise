@@ -19,69 +19,75 @@ const date = document.getElementById("date");
 
 date.setAttribute("min", today);
 
+
+
+// Setting up validation style and tooltips
 const form = document.querySelector("form");
 const elements = form.elements;
 
-// Setting up validation style and tooltips
+const options = {
+    title: "Default message",
+};
 
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
-
-for (const tooltip of tooltipList) {
-    tooltip.disable();
-}
 
 for (const element of elements) {
     const elementHelpText = document.getElementById(`${element.id}-helptext`);
+    const validity = element.validity;
+    let message = null;
 
     element.addEventListener('invalid', (event) => {
+
         event.preventDefault();
 
-        element.classList.add("is-invalid");
-        
-        const invalidElements = document.getElementsByClassName("is-invalid");
-        const firstInvalidElement = invalidElements[0];
-
-        const tooltip = bootstrap.Tooltip.getInstance(`#${element.id}`);
-        tooltip.enable();
+        element.classList.add("is-invalid"); 
         elementHelpText.classList.add("text-danger");
 
-        if ((element.value == "") 
-            || (element.value == null)) {
-                tooltip.setContent({ '.tooltip-inner': 'Ce champ est obligatoire' });
-            } else if ((element.type == "date") && (element.value < today))  {
-            tooltip.setContent({ '.tooltip-inner': "Doit être égale ou supérieure à aujourd'hui" });
-            } else if ((element.type == "number") && (element.value <= 0))  {
-                tooltip.setContent({ '.tooltip-inner': 'Doit être positif' });
-            };
+        const tooltip = bootstrap.Tooltip.getOrCreateInstance(element, options);
 
-        firstInvalidElement.focus();
+        if (validity.valueMissing) {
+            message = "Ce champ est obligatoire";
+        } else if ((element.type == "date") && (validity.rangeUnderflow)) {
+            message = "Doit être égale ou supérieure à aujourd'hui";
+        } else if ((element.type == "number") && (validity.rangeUnderflow)) {
+            message = "Doit être positif";
+        } 
+
+        tooltip.setContent({ '.tooltip-inner': message });
+
+        const invalidElements = document.getElementsByClassName("is-invalid");
+        const firstInvalidElement = invalidElements[0];
+        firstInvalidElement.focus();        
      });
 
-    element.addEventListener('change', (event) => {
-        event.preventDefault();
-        const tooltip = bootstrap.Tooltip.getInstance(`#${element.id}`);
-        tooltip.setContent({ '.tooltip-inner': 'Ce champ est obligatoire' });
+    element.addEventListener('blur', (event) => {
 
-        if ((element.value == "") 
-            || (element.value == null)
-            || (element.value == null)
-            || (element.type == "date") && (element.value < today)
-            || (element.type == "number") && (element.value < 1)) {
-                element.classList.add("is-invalid");
-                tooltip.enable();
-                elementHelpText.classList.add("text-danger");
-            if ((element.type == "date") && (element.value < today)) {
-            tooltip.setContent({ '.tooltip-inner': "Doit être égale ou supérieure à aujourd'hui" });
-            } else if ((element.type == "number") && (element.value < 1)) {
-                tooltip.setContent({ '.tooltip-inner': 'Doit être positif' });
-            }; 
-        } else {
+        event.preventDefault();
+        const valid = element.checkValidity();
+        console.log(valid);
+        console.log(element.value);
+
+        const tooltip = bootstrap.Tooltip.getOrCreateInstance(element, options);
+        
+        if (valid) {
             tooltip.disable();
             element.classList.remove("is-invalid");
             element.classList.add("is-valid");
             elementHelpText.classList.remove("text-danger");
             elementHelpText.classList.add("text-success");
+        } else {
+            tooltip.enable();
+            if (validity.valueMissing) {
+                message = "Ce champ est obligatoire";
+            } else if ((element.type == "date") && (validity.rangeUnderflow)) {
+                message = "Doit être égale ou supérieure à aujourd'hui";
+            } else if ((element.type == "number") && (validity.rangeUnderflow)) {
+                message = "Doit être positif";
+            } 
+        
+            
+            tooltip.setContent({ '.tooltip-inner': message });
+            element.classList.add("is-invalid"); 
+            elementHelpText.classList.add("text-danger");
         };
     });
 }
