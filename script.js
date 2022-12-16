@@ -99,6 +99,7 @@ form.addEventListener("submit", (event) => {
     form.reset();
     for (const element of elements) {
         element.classList.remove("is-valid");
+        element.classList.remove("text-success");
     };
 
     const toastLiveExample = document.getElementById('liveToast')
