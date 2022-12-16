@@ -61,34 +61,36 @@ for (const element of elements) {
         firstInvalidElement.focus();        
      });
 
-    element.addEventListener('blur', (event) => {
+    element.addEventListener('change', (event) => {
 
         event.preventDefault();
-        const valid = element.checkValidity();
 
         const tooltip = bootstrap.Tooltip.getOrCreateInstance(element, options);
         
-        if (valid) {
+        function invalidStyle() {
+            tooltip.enable();
+            tooltip.setContent({ '.tooltip-inner': message });
+            element.classList.add("is-invalid"); 
+            elementHelpText.classList.add("text-danger");
+        }
+          
+        if (validity.valueMissing) {
+            message = "Ce champ est obligatoire";
+            invalidStyle();
+        } else if ((element.type == "number") && (validity.rangeUnderflow)) {
+            message = "Doit être positif";
+            invalidStyle();
+        } else if ((element.type == "date") && (validity.rangeUnderflow))  {
+            message = "Doit être égale ou supérieure à aujourd'hui";
+            invalidStyle();
+        } else {
             tooltip.disable();
             element.classList.remove("is-invalid");
             element.classList.add("is-valid");
             elementHelpText.classList.remove("text-danger");
             elementHelpText.classList.add("text-success");
-        } else {
-            console.log(valid + " " + element.value);
-            if (validity.valueMissing) {
-                message = "Ce champ est obligatoire";
-            } else if ((element.type == "number") && (validity.rangeUnderflow)) {
-                message = "Doit être positif";
-            } else if ((element.type == "date") && (validity.rangeUnderflow))  {
-                message = "Doit être égale ou supérieure à aujourd'hui";
-            }
-        
-            tooltip.enable();
-            tooltip.setContent({ '.tooltip-inner': message });
-            element.classList.add("is-invalid"); 
-            elementHelpText.classList.add("text-danger");
         };
+        
     });
 }
 
