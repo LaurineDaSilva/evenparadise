@@ -96,10 +96,16 @@ for (const element of elements) {
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
+    
     form.reset();
+
     for (const element of elements) {
         element.classList.remove("is-valid");
-        element.classList.remove("text-success");
+    };
+
+    const elementHelpTexts = document.getElementsByClassName("form-text");
+    for (const elementHelpText of elementHelpTexts) {
+        elementHelpText.classList.remove("text-success");
     };
 
     const toastLiveExample = document.getElementById('liveToast')
