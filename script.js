@@ -67,30 +67,35 @@ for (const element of elements) {
 
         const tooltip = bootstrap.Tooltip.getOrCreateInstance(element, options);
         
-        function invalidStyle() {
+        function setInvalidStyle() {
             tooltip.enable();
+            tooltip.show();
             tooltip.setContent({ '.tooltip-inner': message });
             element.classList.add("is-invalid"); 
             elementHelpText.classList.add("text-danger");
         }
-          
-        if (validity.valueMissing) {
-            message = "Ce champ est obligatoire";
-            invalidStyle();
-        } else if ((element.type == "number") && (validity.rangeUnderflow)) {
-            message = "Doit être positif";
-            invalidStyle();
-        } else if ((element.type == "date") && (validity.rangeUnderflow))  {
-            message = "Doit être égale ou supérieure à aujourd'hui";
-            invalidStyle();
-        } else {
+
+        function setValidStyle() {
+            tooltip.hide();
             tooltip.disable();
             element.classList.remove("is-invalid");
             element.classList.add("is-valid");
             elementHelpText.classList.remove("text-danger");
             elementHelpText.classList.add("text-success");
+        }
+          
+        if (validity.valueMissing) {
+            message = "Ce champ est obligatoire";
+            setInvalidStyle();
+        } else if ((element.type == "number") && (validity.rangeUnderflow)) {
+            message = "Doit être positif";
+            setInvalidStyle();
+        } else if ((element.type == "date") && (validity.rangeUnderflow))  {
+            message = "Doit être égale ou supérieure à aujourd'hui";
+            setInvalidStyle();
+        } else {
+            setValidStyle();
         };
-        
     });
 }
 
