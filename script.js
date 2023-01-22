@@ -24,9 +24,7 @@ date.setAttribute("min", today);
 // Setting up validation style and tooltips
 const form = document.querySelector("form");
 const elements = form.elements;
-
-const numberOfUserInputs = document.getElementsByClassName("user-input").length;
-
+let hasFocusedError = false;
 const options = {
     title: "Default message",
 };
@@ -58,7 +56,7 @@ function setValidStyle(tooltip, element, elementHelpText) {
     elementHelpText.classList.add("text-success");
 }
 
-let hasFocusedError = false;
+
 
 for (const element of elements) {
     const elementHelpText = document.getElementById(`${element.id}-helptext`);
