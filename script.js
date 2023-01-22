@@ -58,6 +58,8 @@ function setValidStyle(tooltip, element, elementHelpText) {
     elementHelpText.classList.add("text-success");
 }
 
+let hasFocusedError = false;
+
 for (const element of elements) {
     const elementHelpText = document.getElementById(`${element.id}-helptext`);
     const validity = element.validity;
@@ -71,10 +73,13 @@ for (const element of elements) {
         setInvalidStyle(tooltip, message, element, elementHelpText);
         changeTooltipMessage(validity, message, element, tooltip);
         
-        
-        const invalidElements = document.getElementsByClassName("is-invalid");
-        const firstInvalidElement = invalidElements[0];
-        firstInvalidElement.focus();   
+        if (hasFocusedError == false) {
+            const invalidElements = document.getElementsByClassName("is-invalid");
+            const firstInvalidElement = invalidElements[0];
+            firstInvalidElement.focus(); 
+            hasFocusedError = true;  
+        }
+         
      });
 
     element.addEventListener('change', (event) => {
@@ -89,6 +94,12 @@ for (const element of elements) {
         }    
     });
 }
+
+const submitButton = document.getElementById("submit-button");
+
+submitButton.addEventListener("click", (event) => {
+    hasFocusedError = false;
+})
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
