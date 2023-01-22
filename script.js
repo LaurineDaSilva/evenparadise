@@ -1,5 +1,6 @@
 // Setting up date
 
+const date = document.getElementById("date");
 let today = new Date();
 let day = today.getDate();
 let month = today.getMonth()+1;
@@ -15,19 +16,16 @@ if (month < 10) {
 
 today = year + "-" + month + "-" + day;
 
-const date = document.getElementById("date");
-
 date.setAttribute("min", today);
-
-
 
 // Setting up validation style and tooltips
 const form = document.querySelector("form");
 const elements = form.elements;
-let hasFocusedError = false;
+const submitButton = document.getElementById("submit-button");
 const options = {
     title: "Default message",
 };
+let hasFocusedError = false;
 
 function changeTooltipMessage(validity, message, element, tooltip) {
     if (validity.valueMissing) {
@@ -37,12 +35,12 @@ function changeTooltipMessage(validity, message, element, tooltip) {
     } else if ((element.type == "number") && (validity.rangeUnderflow)) {
         message = "Doit être positif";
     } 
-    tooltip.setContent({ '.tooltip-inner': message });
+    tooltip.setContent({ ".tooltip-inner": message });
 }
 
 function setInvalidStyle(tooltip, message, element, elementHelpText) {
     tooltip.enable();
-    tooltip.setContent({ '.tooltip-inner': message });
+    tooltip.setContent({ ".tooltip-inner": message });
     element.classList.add("is-invalid"); 
     elementHelpText.classList.add("text-danger");
 }
@@ -56,18 +54,16 @@ function setValidStyle(tooltip, element, elementHelpText) {
     elementHelpText.classList.add("text-success");
 }
 
-
-
 for (const element of elements) {
     const elementHelpText = document.getElementById(`${element.id}-helptext`);
     const validity = element.validity;
-    
     let message = null;
     
-    element.addEventListener('invalid', (event) => {
+    element.addEventListener("invalid", (event) => {
         event.preventDefault();
      
         const tooltip = bootstrap.Tooltip.getOrCreateInstance(element, options);
+
         setInvalidStyle(tooltip, message, element, elementHelpText);
         changeTooltipMessage(validity, message, element, tooltip);
         
@@ -76,14 +72,14 @@ for (const element of elements) {
             const firstInvalidElement = invalidElements[0];
             firstInvalidElement.focus(); 
             hasFocusedError = true;  
-        }
-         
+        }    
      });
 
-    element.addEventListener('change', (event) => {
+    element.addEventListener("change", (event) => {
         event.preventDefault();
 
         const tooltip = bootstrap.Tooltip.getOrCreateInstance(element, options);
+
         if ((validity.valueMissing) || (validity.rangeUnderflow)) {  
             setInvalidStyle(tooltip, message, element, elementHelpText);
             changeTooltipMessage(validity, message, element, tooltip);
@@ -93,14 +89,16 @@ for (const element of elements) {
     });
 }
 
-const submitButton = document.getElementById("submit-button");
-
 submitButton.addEventListener("click", (event) => {
     hasFocusedError = false;
 })
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
+
+    const elementHelpTexts = document.getElementsByClassName("form-text");
+    const toastLiveExample = document.getElementById("liveToast");
+    const toast = new bootstrap.Toast(toastLiveExample);
     
     form.reset();
 
@@ -108,13 +106,9 @@ form.addEventListener("submit", (event) => {
         element.classList.remove("is-valid");
     };
 
-    const elementHelpTexts = document.getElementsByClassName("form-text");
     for (const elementHelpText of elementHelpTexts) {
         elementHelpText.classList.remove("text-success");
     };
 
-    const toastLiveExample = document.getElementById('liveToast')
-    const toast = new bootstrap.Toast(toastLiveExample)
-
-    toast.show()
+    toast.show();
 });
