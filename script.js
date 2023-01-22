@@ -19,6 +19,7 @@ today = year + "-" + month + "-" + day;
 date.setAttribute("min", today);
 
 // Setting up validation style and tooltips
+
 const form = document.querySelector("form");
 const elements = form.elements;
 const submitButton = document.getElementById("submit-button");
@@ -70,6 +71,7 @@ for (const element of elements) {
         if (hasFocusedError == false) {
             const invalidElements = document.getElementsByClassName("is-invalid");
             const firstInvalidElement = invalidElements[0];
+
             firstInvalidElement.focus(); 
             hasFocusedError = true;  
         }    
