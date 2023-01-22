@@ -25,77 +25,68 @@ date.setAttribute("min", today);
 const form = document.querySelector("form");
 const elements = form.elements;
 
+const numberOfUserInputs = document.getElementsByClassName("user-input").length;
+
 const options = {
     title: "Default message",
 };
 
+function changeTooltipMessage(validity, message, element, tooltip) {
+    if (validity.valueMissing) {
+        message = "Ce champ est obligatoire";
+    } else if ((element.type == "date") && (validity.rangeUnderflow)) {
+        message = "Doit être égale ou supérieure à aujourd'hui";
+    } else if ((element.type == "number") && (validity.rangeUnderflow)) {
+        message = "Doit être positif";
+    } 
+    tooltip.setContent({ '.tooltip-inner': message });
+}
+
+function setInvalidStyle(tooltip, message, element, elementHelpText) {
+    tooltip.enable();
+    tooltip.setContent({ '.tooltip-inner': message });
+    element.classList.add("is-invalid"); 
+    elementHelpText.classList.add("text-danger");
+}
+
+function setValidStyle(tooltip, element, elementHelpText) {
+    tooltip.hide();
+    tooltip.disable();
+    element.classList.remove("is-invalid");
+    element.classList.add("is-valid");
+    elementHelpText.classList.remove("text-danger");
+    elementHelpText.classList.add("text-success");
+}
 
 for (const element of elements) {
     const elementHelpText = document.getElementById(`${element.id}-helptext`);
     const validity = element.validity;
     
     let message = null;
-
+    
     element.addEventListener('invalid', (event) => {
-
         event.preventDefault();
-
-        element.classList.add("is-invalid"); 
-        elementHelpText.classList.add("text-danger");
-
+     
         const tooltip = bootstrap.Tooltip.getOrCreateInstance(element, options);
-        tooltip.enable();
-
-        if (validity.valueMissing) {
-            message = "Ce champ est obligatoire";
-        } else if ((element.type == "date") && (validity.rangeUnderflow)) {
-            message = "Doit être égale ou supérieure à aujourd'hui";
-        } else if ((element.type == "number") && (validity.rangeUnderflow)) {
-            message = "Doit être positif";
-        } 
-
-        tooltip.setContent({ '.tooltip-inner': message });
-
+        setInvalidStyle(tooltip, message, element, elementHelpText);
+        changeTooltipMessage(validity, message, element, tooltip);
+        
+        
         const invalidElements = document.getElementsByClassName("is-invalid");
         const firstInvalidElement = invalidElements[0];
-        firstInvalidElement.focus();        
+        firstInvalidElement.focus();   
      });
 
     element.addEventListener('change', (event) => {
-
         event.preventDefault();
 
         const tooltip = bootstrap.Tooltip.getOrCreateInstance(element, options);
-        
-        function setInvalidStyle() {
-            tooltip.enable();
-            tooltip.show();
-            tooltip.setContent({ '.tooltip-inner': message });
-            element.classList.add("is-invalid"); 
-            elementHelpText.classList.add("text-danger");
-        }
-
-        function setValidStyle() {
-            tooltip.hide();
-            tooltip.disable();
-            element.classList.remove("is-invalid");
-            element.classList.add("is-valid");
-            elementHelpText.classList.remove("text-danger");
-            elementHelpText.classList.add("text-success");
-        }
-          
-        if (validity.valueMissing) {
-            message = "Ce champ est obligatoire";
-            setInvalidStyle();
-        } else if ((element.type == "number") && (validity.rangeUnderflow)) {
-            message = "Doit être positif";
-            setInvalidStyle();
-        } else if ((element.type == "date") && (validity.rangeUnderflow))  {
-            message = "Doit être égale ou supérieure à aujourd'hui";
-            setInvalidStyle();
+        if ((validity.valueMissing) || (validity.rangeUnderflow)) {  
+            setInvalidStyle(tooltip, message, element, elementHelpText);
+            changeTooltipMessage(validity, message, element, tooltip);
         } else {
-            setValidStyle();
-        };
+            setValidStyle(tooltip, element, elementHelpText);
+        }    
     });
 }
 
