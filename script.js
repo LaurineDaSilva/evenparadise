@@ -37,14 +37,14 @@ function changeTooltipMessage(validity, message, element, tooltip) {
         message = "Doit être positif";
     } 
     tooltip.setContent({ ".tooltip-inner": message });
-}
+};
 
 function setInvalidStyle(tooltip, message, element, elementHelpText) {
     tooltip.enable();
     tooltip.setContent({ ".tooltip-inner": message });
     element.classList.add("is-invalid"); 
     elementHelpText.classList.add("text-danger");
-}
+};
 
 function setValidStyle(tooltip, element, elementHelpText) {
     tooltip.hide();
@@ -53,7 +53,17 @@ function setValidStyle(tooltip, element, elementHelpText) {
     element.classList.add("is-valid");
     elementHelpText.classList.remove("text-danger");
     elementHelpText.classList.add("text-success");
-}
+};
+
+function setFocusOnFirstError() {
+    if (hasFocusedError == false) {
+        const invalidElements = document.getElementsByClassName("is-invalid");
+        const firstInvalidElement = invalidElements[0];
+
+        firstInvalidElement.focus(); 
+        hasFocusedError = true;  
+    }
+};
 
 for (const element of elements) {
     const elementHelpText = document.getElementById(`${element.id}-helptext`);
@@ -67,14 +77,7 @@ for (const element of elements) {
 
         setInvalidStyle(tooltip, message, element, elementHelpText);
         changeTooltipMessage(validity, message, element, tooltip);
-        
-        if (hasFocusedError == false) {
-            const invalidElements = document.getElementsByClassName("is-invalid");
-            const firstInvalidElement = invalidElements[0];
-
-            firstInvalidElement.focus(); 
-            hasFocusedError = true;  
-        }    
+        setFocusOnFirstError();
      });
 
     element.addEventListener("change", (event) => {
@@ -89,11 +92,11 @@ for (const element of elements) {
             setValidStyle(tooltip, element, elementHelpText);
         }    
     });
-}
+};
 
 submitButton.addEventListener("click", (event) => {
     hasFocusedError = false;
-})
+});
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
