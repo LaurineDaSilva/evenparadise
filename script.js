@@ -1,81 +1,119 @@
 // Setting up date
 
+const date = document.getElementById('date');
 let today = new Date();
 let day = today.getDate();
-let month = today.getMonth()+1;
+let month = today.getMonth() + 1;
 const year = today.getFullYear();
 
 if (day < 10) {
-    day = "0" + day;
+  day = '0' + day;
 }
 
 if (month < 10) {
-    month = "0" + month;
+  month = '0' + month;
 }
 
-today = year + "-" + month + "-" + day;
+today = year + '-' + month + '-' + day;
 
-const date = document.getElementById("date");
+date.setAttribute('min', today);
 
-date.setAttribute("min", today);
+// Setting up validation style and tooltips
 
-const form = document.querySelector("form");
+const form = document.querySelector('form');
 const elements = form.elements;
+const submitButton = document.getElementById('submit-button');
+const options = {
+  title: 'Default message',
+};
+let hasFocusedError = false;
 
-// Setting up validation style
+function changeTooltipMessage(validity, message, element, tooltip) {
+  if (validity.valueMissing) {
+    message = 'Ce champ est obligatoire';
+  } else if (element.type == 'date' && validity.rangeUnderflow) {
+    message = "Doit être égale ou supérieure à aujourd'hui";
+  } else if (element.type == 'number' && validity.rangeUnderflow) {
+    message = 'Doit être positif';
+  }
+  tooltip.setContent({ '.tooltip-inner': message });
+}
 
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+function setInvalidStyle(tooltip, message, element, elementHelpText) {
+  tooltip.enable();
+  tooltip.setContent({ '.tooltip-inner': message });
+  element.classList.add('is-invalid');
+  elementHelpText.classList.add('text-danger');
+}
+
+function setValidStyle(tooltip, element, elementHelpText) {
+  tooltip.hide();
+  tooltip.disable();
+  element.classList.remove('is-invalid');
+  element.classList.add('is-valid');
+  elementHelpText.classList.remove('text-danger');
+  elementHelpText.classList.add('text-success');
+}
+
+function setFocusOnFirstError() {
+  if (hasFocusedError == false) {
+    const invalidElements = document.getElementsByClassName('is-invalid');
+    const firstInvalidElement = invalidElements[0];
+
+    firstInvalidElement.focus();
+    hasFocusedError = true;
+  }
+}
 
 for (const element of elements) {
+  const elementHelpText = document.getElementById(`${element.id}-helptext`);
+  const validity = element.validity;
+  let message = null;
 
-    element.addEventListener('invalid', (event) => {
-        event.preventDefault();
+  element.addEventListener('invalid', (event) => {
+    event.preventDefault();
 
-        element.classList.add("is-invalid");
-        
-        const invalidElements = document.getElementsByClassName("is-invalid");
-        const firstInvalidElement = invalidElements[0];
+    const tooltip = bootstrap.Tooltip.getOrCreateInstance(element, options);
 
-        const tooltip = bootstrap.Tooltip.getInstance(`#${element.id}`);
-        tooltip.enable();
+    setInvalidStyle(tooltip, message, element, elementHelpText);
+    changeTooltipMessage(validity, message, element, tooltip);
+    setFocusOnFirstError();
+  });
 
-        if ((element.type == "date") && (element.value < today))  {
-            tooltip.setContent({ '.tooltip-inner': "Doit être égale ou supérieure à aujourd'hui" });
-        } else if ((element.type == "number") && (element.value <= 0))  {
-            tooltip.setContent({ '.tooltip-inner': 'Doit être positif' });
-        };
+  element.addEventListener('change', (event) => {
+    event.preventDefault();
 
-        firstInvalidElement.focus();
-     });
+    const tooltip = bootstrap.Tooltip.getOrCreateInstance(element, options);
 
-    element.addEventListener('change', (event) => {
-        event.preventDefault();
-
-        const tooltip = bootstrap.Tooltip.getInstance(`#${element.id}`);
-        tooltip.enable();
-
-        if (((element.type == "date") && (element.value < today)) || (element.value == "") || ((element.type == "number") && (element.value <= 0))) {
-            element.classList.add("is-invalid");
-            tooltip.enable();
-            if ((element.type == "date" && (element.value < today))) {
-                tooltip.setContent({ '.tooltip-inner': "Doit être égale ou supérieure à aujourd'hui" });
-            } else if ((element.type == "number") && (element.value <= 0)) {
-                tooltip.setContent({ '.tooltip-inner': 'Doit être positif' });
-            };
-        } else {
-            tooltip.disable();
-            element.classList.remove("is-invalid");
-            element.classList.add("is-valid");
-        }
-    });
+    if (validity.valueMissing || validity.rangeUnderflow) {
+      setInvalidStyle(tooltip, message, element, elementHelpText);
+      changeTooltipMessage(validity, message, element, tooltip);
+    } else {
+      setValidStyle(tooltip, element, elementHelpText);
+    }
+  });
 }
 
-form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    form.reset();
-    for (const element of elements) {
-        element.classList.remove("is-valid");
-    };
-    console.log("implement toaster");
+submitButton.addEventListener('click', (event) => {
+  hasFocusedError = false;
+});
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const elementHelpTexts = document.getElementsByClassName('form-text');
+  const toastLiveExample = document.getElementById('liveToast');
+  const toast = new bootstrap.Toast(toastLiveExample);
+
+  form.reset();
+
+  for (const element of elements) {
+    element.classList.remove('is-valid');
+  }
+
+  for (const elementHelpText of elementHelpTexts) {
+    elementHelpText.classList.remove('text-success');
+  }
+
+  toast.show();
 });

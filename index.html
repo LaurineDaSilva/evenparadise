@@ -24,60 +24,77 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="name" class="form-label">Nom</label>
-                        <input type="text" class="form-control user-input" id="name" required minlength="1" maxlength="255" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip"
+                        <input type="text" class="form-control user-input" id="name" required minlength="1" maxlength="255" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip"
                         />
-                        <p class="form-text">Nom de l'événement.</p>
+                        <p class="form-text" id="name-helptext">Nom de l'événement.</p>
                     </div>
 
                     <div class="col-md-4">
                         <label for="date" class="form-label">Date</label>
-                        <input type="date" class="form-control user-input" id="date" required data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip"/>
-                        <p class="form-text">Date de l'événement.</p>
+                        <input type="date" class="form-control user-input" id="date" required data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip"/>
+                        <p class="form-text" id="date-helptext">Date de l'événement.</p>
                     </div>
 
                     <div class="col-md-4">
                         <label for="place" class="form-label">Lieu</label>
-                        <select class="form-select user-input" id="place" required data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip">
+                        <select class="form-select user-input" id="place" required data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip">
                             <option value="" selected>Choisir un lieu dans la liste</option>
                             <option value="1">Paris</option>
                             <option value="2">Rennes</option>
                             <option value="3">Marseille</option>
                         </select>
-                        <p class="form-text">Lieu de l'événement.</p>
+                        <p class="form-text" id="place-helptext">Lieu de l'événement.</p>
                     </div>
                 </div>
                 
                 <div class="row">
                     <div class="col-md-8">
                         <label for="theme" class="form-label">Thème</label>
-                        <select class="form-select user-input" id="theme" required data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip">
+                        <select class="form-select user-input" id="theme" required data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip">
                             <option value="" selected>Choisir un thème dans la liste</option>
                             <option value="1">Écologie</option>
                             <option value="2">Ressources Humaines</option>
                             <option value="3">Tech</option>
                         </select>
-                        <p class="form-text">Thème de l'événement.</p>
+                        <p class="form-text" id="theme-helptext">Thème de l'événement.</p>
                     </div>
 
                     <div class="col-md-4">
                         <label for="rate" class="form-label">Tarif</label>
                         <div class="input-group">
                             <span class="input-group-text">€</span>
-                            <input type="number" class="form-control user-input" id="rate" required step="0.01" min="1" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip"/>
+                            <input type="number" class="form-control user-input" id="rate" required step="0.01" min="1" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip"/>
                         </div>
-                        <p class="form-text">Tarif journalier de l'événement.</p>
+                        <p class="form-text" id="rate-helptext">Tarif journalier de l'événement.</p>
                     </div>
                  </div>
 
 
             <div class="row">
-                <label for="description" class="form-label">Description</label>
-                <textarea class="form-control user-input" id="description" rows="4" required minlength="1" maxlength="1000" data-bs-toggle="tooltip" data-bs-title="Ce champ est obligatoire" data-bs-custom-class="custom-tooltip"></textarea>
+                <div class="col-md-12">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control user-input" id="description" rows="4" required minlength="1" maxlength="1000" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip"></textarea>
+                    <p class="form-text" id="description-helptext">Description de l'événement.</p>
+                </div>
             </div>
 
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end margin">
-                <button type="submit" class="btn btn-primary" id="submit-button">Sauvegarder</button>
-              </div>
+            <div class="row">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end margin">
+                    <button type="submit" class="btn btn-primary" id="submit-button">Sauvegarder</button>
+                </div>
+            </div>
+
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                <div class="toast" id="liveToast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <strong class="me-auto">EventParadise</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        Événement créé avec succès.
+                    </div>
+                </div>
+            </div>
               
               
               
