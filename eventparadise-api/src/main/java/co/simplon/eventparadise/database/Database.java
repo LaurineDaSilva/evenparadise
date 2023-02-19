@@ -71,4 +71,12 @@ public class Database {
 	return THEMES.values();
     }
 
+    public static Place findOnePlace(Long placeId) {
+	return PLACES.get(placeId);
+    }
+
+    public static Theme findOneTheme(Long themeId) {
+	return THEMES.get(themeId);
+    }
+
 }
