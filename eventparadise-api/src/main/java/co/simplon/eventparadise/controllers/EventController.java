@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.simplon.eventparadise.database.DatabaseEvent;
+import co.simplon.eventparadise.database.Database;
 import co.simplon.eventparadise.dtos.EventView;
 import co.simplon.eventparadise.entities.Event;
 
@@ -17,7 +17,7 @@ import co.simplon.eventparadise.entities.Event;
 public class EventController {
 
     public Collection<EventView> getAll() {
-	Collection<Event> events = DatabaseEvent.findAll();
+	Collection<Event> events = Database.findAll();
 	Collection<EventView> views = new ArrayList<>();
 	for (Event event : events) {
 	    EventView view = new EventView();
