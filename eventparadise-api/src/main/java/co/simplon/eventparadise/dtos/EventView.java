@@ -2,15 +2,12 @@ package co.simplon.eventparadise.dtos;
 
 import java.time.LocalDate;
 
-import co.simplon.eventparadise.entities.Place;
-import co.simplon.eventparadise.entities.Theme;
-
 public class EventView {
     private Long id;
     private String name;
     private LocalDate date;
-    private Place place;
-    private Theme theme;
+    private long placeId;
+    private long themeId;
     private double rate;
     private String description;
 
@@ -42,20 +39,20 @@ public class EventView {
 	this.date = date;
     }
 
-    public Place getPlace() {
-	return place;
+    public long getPlaceId() {
+	return placeId;
     }
 
-    public void setPlace(Place place) {
-	this.place = place;
+    public void setPlaceId(long placeId) {
+	this.placeId = placeId;
     }
 
-    public Theme getTheme() {
-	return theme;
+    public long getThemeId() {
+	return themeId;
     }
 
-    public void setTheme(Theme theme) {
-	this.theme = theme;
+    public void setThemeId(long themeId) {
+	this.themeId = themeId;
     }
 
     public double getRate() {
@@ -77,8 +74,8 @@ public class EventView {
     @Override
     public String toString() {
 	return "{id=" + id + ", name=" + name + ", date="
-		+ date + ", place=" + place + ", theme="
-		+ theme + ", rate=" + rate
+		+ date + ", placeId=" + placeId
+		+ ", themeId=" + themeId + ", rate=" + rate
 		+ ", description=" + description + "}";
     }
 

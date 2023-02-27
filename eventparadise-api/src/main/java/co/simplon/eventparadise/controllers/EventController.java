@@ -31,9 +31,9 @@ public class EventController {
 	    view.setId(event.getId());
 	    view.setName(event.getName());
 	    view.setDate(event.getDate());
-	    // view.setPlace(event.getPlace());
-	    // view.setTheme(event.getTheme());
-	    // view.setRate(event.getRate());
+	    view.setPlaceId(event.getPlaceId());
+	    view.setThemeId(event.getThemeId());
+	    view.setRate(event.getRate());
 	    view.setDescription(event.getDescription());
 	    views.add(view);
 	}
@@ -46,9 +46,9 @@ public class EventController {
 	Event event = new Event();
 	event.setName(inputs.getName());
 	event.setDate(inputs.getDate());
-	// event.setPlace(inputs.getPlaceId());
-	// event.setTheme(inputs.getThemeId);
-	// event.setRate(inputs.getRate);
+	event.setPlaceId(inputs.getPlaceId());
+	event.setThemeId(inputs.getThemeId());
+	event.setRate(inputs.getRate());
 	event.setDescription(inputs.getDescription());
 	Database.saveEvent(event);
 	System.out.println(event);
