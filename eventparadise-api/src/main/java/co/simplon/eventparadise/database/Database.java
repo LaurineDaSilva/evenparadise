@@ -50,7 +50,7 @@ public class Database {
     public static void savePlace(Place place) {
 	placeId++;
 	place.setId(placeId);
-	PLACES.put(eventId, place);
+	PLACES.put(placeId, place);
     }
 
     public static void saveTheme(Theme theme) {
