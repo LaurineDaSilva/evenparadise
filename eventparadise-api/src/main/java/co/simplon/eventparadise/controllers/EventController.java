@@ -31,10 +31,11 @@ public class EventController {
 	    view.setId(event.getId());
 	    view.setName(event.getName());
 	    view.setDate(event.getDate());
-	    view.setPlace(event.getPlace());
-	    view.setTheme(event.getTheme());
-	    view.setRate(event.getRate());
+	    // view.setPlace(event.getPlace());
+	    // view.setTheme(event.getTheme());
+	    // view.setRate(event.getRate());
 	    view.setDescription(event.getDescription());
+	    views.add(view);
 	}
 	return views;
     }
