@@ -1,7 +1,7 @@
 import {
   populatePlaces,
   populateThemes,
-  //  createEvent,
+  createEvent,
 } from '../front-end/databinding.js';
 
 populatePlaces();
@@ -109,7 +109,7 @@ submitButton.addEventListener('click', (event) => {
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
-  //  createEvent();
+  createEvent();
 
   const elementHelpTexts = document.getElementsByClassName('form-text');
   const toastLiveExample = document.getElementById('liveToast');

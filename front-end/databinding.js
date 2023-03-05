@@ -49,11 +49,17 @@ export async function populateThemes() {
     themesSelect.add(option);
   });
 }
-/*
+
 // Post event
 
 export async function createEvent() {
-  const newEvent = await send('http://localhost:8081/', 'POST');
-  const content = await newEvent.json();
-  console.log(content);
-}*/
+  const data = {
+    name: document.getElementById('name').value,
+    date: document.getElementById('date').value,
+    placeId: document.getElementById('place').value,
+    themeId: document.getElementById('theme').value,
+    rate: document.getElementById('rate').value,
+    description: document.getElementById('description').value,
+  };
+  const newEvent = await send('http://localhost:8081/events', 'POST', data);
+}
